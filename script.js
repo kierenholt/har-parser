@@ -12,10 +12,9 @@ const search = async function (coin) {
         document.getElementsByTagName('input')[0].dispatchEvent(new KeyboardEvent("keydown", {
             which: 9
         }));
-        setTimeout(res, 10000);
+        setTimeout(res, 3000);
 
     });
-
 }
 
 
