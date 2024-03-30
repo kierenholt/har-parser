@@ -4,14 +4,14 @@
 
 const search = async function (keyword) {
     return new Promise((res, rej) => {
-
+        console.log("search entered at " + new Date().toLocaleTimeString());
         document.getElementsByTagName('input')[0].dispatchEvent(new FocusEvent("focus"));
         document.getElementsByTagName('input')[0].value = keyword;
         document.getElementsByTagName('input')[0].dispatchEvent(new KeyboardEvent("keydown", {
             which: 9
         }));
         nextKeyword = keyword == "USDT" ? "USDC" : "USDT";
-        nextInterval = 30 + Math.random() * 60;
+        nextInterval = 300 + Math.random() * 120;
         setTimeout(() => search(nextKeyword), nextInterval * 1000);
     });
 }
@@ -24,10 +24,12 @@ window.XMLHttpRequest.prototype.open = function (method, url, async, user, passw
             ranked = JSON.parse(this.responseText.substring(6)).default.rankedList[1].rankedKeyword;
             if (ranked.length) {
                 for (r of ranked) {
-                    if (r.query && r.value > 500 && !alreadyInList(r.query) && r.query.indexOf("usdt") != -1) {
+                    if (r.query && r.value > 500 && !alreadyInList(r.query) && r.query.indexOf("usd") != -1) {
                         addToList(r.query);
-                        console.log(`${r.query} ${new Date().toString()}`);
-                        window.open(`https://www.google.com/search?q=${r.query}`);
+                        let message = `${r.query} / ${r.value}`;
+                        console.log(`${message} / ${new Date().toString()}`);
+                        let wirepusherUrl = `https://wirepusher.com/send?id=jRjqmpGFc&title=BREAKOUT&message=${message}&type=trends`;
+                        window.open(encodeURI(wirepusherUrl));
                     }
                 }
             }
