@@ -24,12 +24,12 @@ window.XMLHttpRequest.prototype.open = function (method, url, async, user, passw
             ranked = JSON.parse(this.responseText.substring(6)).default.rankedList[1].rankedKeyword;
             if (ranked.length) {
                 for (r of ranked) {
-                    if (r.query && r.value > 500 && !alreadyInList(r.query) && r.query.indexOf("usd") != -1) {
+                    if (r.query && r.value > 200 && !alreadyInList(r.query) && r.query.indexOf("usd") != -1) {
                         addToList(r.query);
                         let message = `${r.query} / ${r.value}`;
                         console.log(`${message} / ${new Date().toString()}`);
                         let wirepusherUrl = `https://wirepusher.com/send?id=jRjqmpGFc&title=BREAKOUT&message=${message}&type=trends`;
-                        window.open(encodeURI(wirepusherUrl));
+                        fetch(encodeURI(wirepusherUrl));
                     }
                 }
             }
